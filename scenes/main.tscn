@@ -126,15 +126,17 @@ sources/0 = SubResource("TileSetAtlasSource_kek77")
 sources/1 = SubResource("TileSetAtlasSource_efxa6")
 sources/2 = SubResource("TileSetAtlasSource_a8y0u")
 
-[sub_resource type="Gradient" id="Gradient_trceg"]
-offsets = PackedFloat32Array(0, 0.993197)
-colors = PackedColorArray(0, 0, 0, 0, 0.737193, 0.737193, 0.737193, 0.65098)
+[sub_resource type="Gradient" id="Gradient_a8y0u"]
+colors = PackedColorArray(0, 0, 0, 0, 0.807843, 0.807843, 0.807843, 0.713726)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_a8y0u"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jkv2x"]
+frequency = 0.0115
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jkv2x"]
-color_ramp = SubResource("Gradient_trceg")
-noise = SubResource("FastNoiseLite_a8y0u")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jbj1t"]
+width = 64
+height = 64
+color_ramp = SubResource("Gradient_a8y0u")
+noise = SubResource("FastNoiseLite_jkv2x")
 
 [sub_resource type="Animation" id="Animation_trceg"]
 resource_name = "smog"
@@ -223,9 +225,9 @@ stream = ExtResource("11_ya4ey")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 10
-position = Vector2(264, 250)
-scale = Vector2(1.25195, 1.11719)
-texture = SubResource("NoiseTexture2D_jkv2x")
+position = Vector2(267, 256)
+scale = Vector2(9.29055, 8.29048)
+texture = SubResource("NoiseTexture2D_jbj1t")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
