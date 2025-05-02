@@ -1,0 +1,158 @@
+[gd_scene load_steps=10 format=3 uid="uid://d35lomqqrr1xa"]
+
+[ext_resource type="Texture2D" uid="uid://ds6vjkuoww04" path="res://icon.svg" id="1_pnvn8"]
+[ext_resource type="Script" uid="uid://d3iinfd13uyne" path="res://scripts/passenger.gd" id="1_rejbp"]
+[ext_resource type="Texture2D" uid="uid://c3clcy016duwd" path="res://graphics/passenger.png" id="3_wcaas"]
+[ext_resource type="AudioStream" uid="uid://cs2a6nncmbl2m" path="res://audio/sfx/bloop.wav" id="4_1lms8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wcaas"]
+size = Vector2(28, 26)
+
+[sub_resource type="Animation" id="Animation_5uq2c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D/Passenger:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node2D/Passenger:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1lms8"]
+resource_name = "bounce"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.50329),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wcaas"]
+resource_name = "spin"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/Passenger:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333),
+"transitions": PackedFloat32Array(1, 1, 1, 0.840896, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.140625, 1), Vector2(1, 1), Vector2(0.140625, 1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.233333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -15), Vector2(0, -11)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.233333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_remove"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Node2D/Passenger:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.133333, 0.233333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h0g25"]
+_data = {
+&"RESET": SubResource("Animation_5uq2c"),
+&"bounce": SubResource("Animation_1lms8"),
+&"spin": SubResource("Animation_wcaas")
+}
+
+[node name="Passenger" type="Area2D" groups=["Passenger"]]
+script = ExtResource("1_rejbp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wcaas")
+
+[node name="Icon" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 0, 0, 1)
+position = Vector2(4.76837e-07, 0)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_pnvn8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_h0g25")
+}
+autoplay = "bounce"
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Passenger" type="Sprite2D" parent="Node2D"]
+z_index = 6
+position = Vector2(0, -21)
+texture = ExtResource("3_wcaas")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1lms8")
+pitch_scale = 1.41
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=3 uid="uid://cgam28wvdgy23"]
+
+[ext_resource type="Texture2D" uid="uid://dx6joeku536oj" path="res://graphics/target.png" id="1_ls6s3"]
+[ext_resource type="Texture2D" uid="uid://btcspou3tht2q" path="res://graphics/target_blur.png" id="2_ysfre"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxefm"]
+
+[sub_resource type="Animation" id="Animation_ls6s3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qxefm"]
+resource_name = "pulsate"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1.93187, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ysfre"]
+_data = {
+&"RESET": SubResource("Animation_ls6s3"),
+&"pulsate": SubResource("Animation_qxefm")
+}
+
+[node name="Destination" type="Area2D" groups=["Destination"]]
+z_index = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qxefm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ysfre")
+}
+autoplay = "pulsate"
+
+[node name="Graphics" type="Node2D" parent="."]
+
+[node name="Circle" type="Sprite2D" parent="Graphics"]
+modulate = Color(0.715004, 0.949485, 7.70092e-07, 1)
+scale = Vector2(0.607689, 0.611688)
+texture = ExtResource("1_ls6s3")
+
+[node name="Circle2" type="Sprite2D" parent="Graphics"]
+modulate = Color(0.737975, 0.999484, 0, 1)
+scale = Vector2(0.607689, 0.611688)
+texture = ExtResource("2_ysfre")
+
+[node name="Polygon2D" type="Polygon2D" parent="Graphics"]
+visible = false
+color = Color(0, 1, 1, 0.388235)
+polygon = PackedVector2Array(-10, -10, 10, -10, 10, 10, -10, 10)

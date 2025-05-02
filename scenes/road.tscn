@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvxxehd3we5go"]
+
+[ext_resource type="Texture2D" uid="uid://c4bcpsx5u26c5" path="res://graphics/road.png" id="1_mv8x7"]
+
+[node name="Road" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -5
+texture = ExtResource("1_mv8x7")

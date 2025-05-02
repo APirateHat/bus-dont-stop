@@ -1,0 +1,66 @@
+[gd_scene load_steps=13 format=4 uid="uid://ux3nsb5g7uhv"]
+
+[ext_resource type="Script" uid="uid://bn2ild0mpti5m" path="res://main.gd" id="1_7mycd"]
+[ext_resource type="PackedScene" uid="uid://d0oam8yqf515t" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://d35lomqqrr1xa" path="res://passenger.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://cgam28wvdgy23" path="res://destination.tscn" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://be7ckvhcp5t4r" path="res://roads.png" id="5_7mycd"]
+[ext_resource type="Texture2D" uid="uid://dyfns4crd2i5n" path="res://sidewalk.png" id="5_lquwl"]
+[ext_resource type="Texture2D" uid="uid://dsrvt5e6o48hf" path="res://dropoffs.png" id="7_272bh"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bvp3"]
+resource_name = "Road"
+texture = ExtResource("5_7mycd")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
+texture = ExtResource("5_lquwl")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_lquwl"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_1bvp3")
+sources/1 = SubResource("TileSetAtlasSource_lquwl")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5vw27"]
+texture = ExtResource("7_272bh")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_kek77"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_5vw27")
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("tilemap", "destination_layer")]
+script = ExtResource("1_7mycd")
+tilemap = NodePath("TileMapLayer")
+destination_layer = NodePath("TileMapLayerDestinations")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(256, 256)
+
+[node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(256, 256)
+
+[node name="Passenger" parent="." instance=ExtResource("2_h2yge")]
+position = Vector2(352, 192)
+
+[node name="Destination" parent="." instance=ExtResource("3_1bvp3")]
+position = Vector2(128, 128)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAAAAAkAAQAAAAAAAAAAAAoAAQAAAAAAAAAAAAsAAQAAAAAAAAAAAAwAAQAAAAAAAAAAAA0AAQAAAAAAAAAAAA4AAQAAAAAAAAABAA8AAQAAAAAAAGACAA8AAQAAAAAAAGADAA8AAQAAAAAAAGAEAA8AAQAAAAAAAGAFAA8AAQAAAAAAAGAGAA8AAQAAAAAAAGAHAA8AAQAAAAAAAGAIAA8AAQAAAAAAAGAJAA8AAQAAAAAAAGAKAA8AAQAAAAAAAGALAA8AAQAAAAAAAGAMAA8AAQAAAAAAAGANAA8AAQAAAAAAAGAOAA8AAQAAAAAAAGAPAA4AAQAAAAAAADAPAA0AAQAAAAAAADAPAAwAAQAAAAAAADAPAAsAAQAAAAAAADAPAAoAAQAAAAAAADAPAAkAAQAAAAAAADAPAAgAAQAAAAAAADAPAAcAAQAAAAAAADAPAAYAAQAAAAAAADAPAAUAAQAAAAAAADAPAAQAAQAAAAAAADAPAAMAAQAAAAAAADAPAAIAAQAAAAAAADAPAAEAAQAAAAAAADABAAAAAQAAAAAAAFACAAAAAQAAAAAAAFADAAAAAQAAAAAAAFAEAAAAAQAAAAAAAFAFAAAAAQAAAAAAAFAGAAAAAQAAAAAAAFAHAAAAAQAAAAAAAFAIAAAAAQAAAAAAAFAJAAAAAQAAAAAAAFAKAAAAAQAAAAAAAFALAAAAAQAAAAAAAFAMAAAAAQAAAAAAAFANAAAAAQAAAAAAAFAOAAAAAQAAAAAAAFABAAEAAAABAAAAADABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAABAAQAAAAAAAAAAAABAAUAAAAAAAAAAAABAAYAAAAAAAAAAAABAAcAAAAAAAAAAAABAAgAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAABAAsAAAAAAAAAAAABAAwAAAAAAAAAAAABAA0AAAAAAAAAAAABAA4AAAABAAAAAFACAA4AAAAAAAAAAGADAA4AAAAAAAAAAGAEAA4AAAAAAAAAAGAFAA4AAAAAAAAAAGAGAA4AAAAAAAAAAGAHAA4AAAAAAAAAAGAIAA4AAAAAAAAAAGAJAA4AAAAAAAAAAGAKAA4AAAAAAAAAAGALAA4AAAAAAAAAAGAMAA4AAAAAAAAAAGANAA4AAAAAAAAAAGAOAA4AAAABAAAAAAAOAA0AAAAAAAAAADAOAAwAAAAAAAAAADAOAAsAAAAAAAAAADAOAAoAAAAAAAAAADAOAAkAAAAAAAAAADAOAAgAAAAAAAAAADAOAAcAAAAAAAAAADAOAAYAAAAAAAAAADAOAAUAAAAAAAAAADAOAAQAAAAAAAAAADAOAAMAAAAAAAAAADAOAAIAAAAAAAAAADAOAAEAAAABAAAAAGANAAEAAAAAAAAAAFAMAAEAAAAAAAAAAFALAAEAAAAAAAAAAFAKAAEAAAAAAAAAAFAJAAEAAAAAAAAAAFAIAAEAAAAAAAAAAFAHAAEAAAAAAAAAAFAGAAEAAAAAAAAAAFAFAAEAAAAAAAAAAFAEAAEAAAAAAAAAAFADAAEAAAAAAAAAAFACAAEAAAAAAAAAAFA=")
+tile_set = SubResource("TileSet_lquwl")
+
+[node name="TileMapLayerDestinations" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAABAAoAAQAAAAAAAAABAAUAAQAAAAAAAAAEAAEAAQAAAAAAAAALAAEAAQAAAAAAAAAOAAUAAQAAAAAAAAAOAAsAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_kek77")

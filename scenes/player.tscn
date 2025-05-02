@@ -1,0 +1,177 @@
+[gd_scene load_steps=17 format=3 uid="uid://d0oam8yqf515t"]
+
+[ext_resource type="Texture2D" uid="uid://ds6vjkuoww04" path="res://icon.svg" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://dum2qcigoc0av" path="res://scripts/player.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://c2maof15qtbur" path="res://graphics/bus.png" id="3_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://bgwm00v81060u" path="res://graphics/smoke_particle.png" id="4_hqtel"]
+[ext_resource type="AudioStream" uid="uid://d31100o6m30r5" path="res://audio/sfx/bus_engine.wav" id="5_qlg0r"]
+[ext_resource type="AudioStream" uid="uid://duji4dmodln8d" path="res://audio/sfx/explosion.wav" id="6_fjrip"]
+[ext_resource type="AudioStream" uid="uid://dw1ku3aqvodjb" path="res://audio/sfx/honk.wav" id="6_tuyoq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
+size = Vector2(12, 13)
+
+[sub_resource type="Curve" id="Curve_i3pqv"]
+_data = [Vector2(0, 0.269663), 0.0, 0.0, 0, 0, Vector2(0.982955, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_hqtel"]
+offsets = PackedFloat32Array(0.366667, 1)
+colors = PackedColorArray(0.737775, 0.718046, 0.639153, 0.866667, 0.426259, 0.364959, 0.319596, 0)
+
+[sub_resource type="Gradient" id="Gradient_fjrip"]
+offsets = PackedFloat32Array(0, 0.482517, 1)
+colors = PackedColorArray(0.942382, 0.452154, 0, 1, 0.92549, 0.262745, 0, 1, 0.905882, 0.662745, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_smehm"]
+colors = PackedColorArray(0, 0, 0, 0, 0.227451, 0.227451, 0.227451, 0.47451)
+
+[sub_resource type="Animation" id="Animation_sweqy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bus:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hqtel"]
+resource_name = "drive"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bus:scale")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0166667, 0.0333333, 0.0413647, 0.0577182, 0.0743849, 0.0910516, 0.099083, 0.116398, 0.133065, 0.149732, 0.157763, 0.176041, 0.192707, 0.209374, 0.217405),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.95, 0.95), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.96, 0.96), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.97, 0.97), Vector2(1, 1), Vector2(0.98, 0.98)]
+}
+
+[sub_resource type="Animation" id="Animation_2hs0m"]
+resource_name = "idle"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bus:scale")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0166667, 0.0333333, 0.0413647, 0.0577182, 0.0743849, 0.0910516, 0.099083, 0.116398, 0.133065, 0.149732, 0.157763, 0.176041, 0.192707, 0.209374, 0.217405),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.98, 0.98), Vector2(1, 1), Vector2(0.98, 0.98)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2hs0m"]
+_data = {
+&"RESET": SubResource("Animation_sweqy"),
+&"drive": SubResource("Animation_hqtel"),
+&"idle": SubResource("Animation_2hs0m")
+}
+
+[node name="Player" type="Area2D" groups=["Bus"]]
+z_index = 5
+script = ExtResource("1_onrkg")
+
+[node name="Icon" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0.2, 0)
+scale = Vector2(0.096875, 0.2)
+texture = ExtResource("1_4flbx")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_onrkg")
+
+[node name="Bus" type="Sprite2D" parent="."]
+position = Vector2(0, 3)
+texture = ExtResource("3_i3pqv")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Bus"]
+z_index = -1
+position = Vector2(2, 14)
+amount = 10
+texture = ExtResource("4_hqtel")
+lifetime = 0.2
+particle_flag_align_y = true
+direction = Vector2(0, 1)
+spread = 12.27
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.51
+initial_velocity_max = 80.81
+damping_min = 17.172
+damping_max = 100.0
+scale_amount_min = 0.1
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_i3pqv")
+color_ramp = SubResource("Gradient_hqtel")
+
+[node name="ExplosionParticles" type="CPUParticles2D" parent="Bus"]
+position = Vector2(0, -15)
+emitting = false
+amount = 10
+texture = ExtResource("4_hqtel")
+lifetime = 0.5
+explosiveness = 0.51
+randomness = 0.4
+emission_shape = 1
+emission_sphere_radius = 5.75
+spread = 109.42
+gravity = Vector2(0, 0)
+initial_velocity_min = 0.1
+initial_velocity_max = 2.0
+scale_amount_min = 0.2
+color_ramp = SubResource("Gradient_fjrip")
+
+[node name="ExplosionParticles2" type="CPUParticles2D" parent="Bus"]
+position = Vector2(1, -10)
+emitting = false
+amount = 10
+texture = ExtResource("4_hqtel")
+lifetime = 0.5
+explosiveness = 0.51
+randomness = 0.4
+emission_shape = 1
+emission_sphere_radius = 5.75
+direction = Vector2(1, 1)
+spread = 109.42
+gravity = Vector2(0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 31.58
+scale_amount_max = 3.0
+color_ramp = SubResource("Gradient_smehm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2hs0m")
+}
+autoplay = "drive"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_qlg0r")
+autoplay = true
+
+[node name="Explosion" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_fjrip")
+
+[node name="Honk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_tuyoq")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
